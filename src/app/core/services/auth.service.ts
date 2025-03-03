@@ -29,9 +29,7 @@ export class AuthService {
 
   register(email: string, password: string) {
     return this.http
-      .post<{
-        access_token: string;
-      }>(`${this.API_URL}/signup`, { email, password })
+      .post(`${this.API_URL}/signup`, { username: email, password })
       .pipe(
         catchError(error => {
           return throwError(() => new Error('Registration failed'));
@@ -40,14 +38,10 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http
-      .post<{
-        access_token: string;
-      }>(`${this.API_URL}/login`, { email, password })
-      .pipe(
-        catchError(error => {
-          return throwError(() => new Error('Login failed'));
-        })
-      );
+    return this.http.post(`${this.API_URL}/login`, { email, password }).pipe(
+      catchError(error => {
+        return throwError(() => new Error('Login failed'));
+      })
+    );
   }
 }

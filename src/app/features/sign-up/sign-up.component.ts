@@ -52,6 +52,8 @@ export class SignUpComponent {
 
     this.authService.register(email!, password!).subscribe({
       next: response => {
+        console.log('register succesfull');
+        console.log(response);
         this.loading = false;
       },
       error: () => {
