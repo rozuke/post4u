@@ -52,10 +52,6 @@ export class SignUpComponent {
 
     this.authService.register(email!, password!).subscribe({
       next: response => {
-        if (response?.jwt) {
-          localStorage.setItem('token', response.jwt);
-          // Redirigir al feed
-        }
         this.loading = false;
       },
       error: () => {
