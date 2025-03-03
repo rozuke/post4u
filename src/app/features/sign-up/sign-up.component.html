@@ -1,0 +1,40 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" type="email" required />
+
+    <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+      Email is required
+    </mat-error>
+    <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+      Format email is invalid
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password" type="password" required />
+
+    <mat-hint>Minimun 8 characters with letters and numbers</mat-hint>
+    <mat-error *ngIf="registerForm.get('password')?.hasError('required')"
+      >Passowrd is required</mat-error
+    >
+    <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+      Minimun 8 characters
+    </mat-error>
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    [disabled]="registerForm.invalid || loading"
+    class="submit-button"
+  >
+    {{ loading ? 'Signing up...' : 'Sign up' }}
+  </button>
+
+  <mat-error *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </mat-error>
+</form>
