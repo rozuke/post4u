@@ -29,8 +29,10 @@
       <p>Option 3</p>
     </mat-sidenav>
 
-    <mat-sidenav-content class="main-container"
-      ><app-post-card></app-post-card>
+    <mat-sidenav-content class="main-container">
+      @for (item of data; track $index) {
+        <app-post-card ></app-post-card>
+      }
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

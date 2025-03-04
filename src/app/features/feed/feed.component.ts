@@ -1,21 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {
-  BreakpointObserver,
-  Breakpoints,
-  MediaMatcher,
-} from '@angular/cdk/layout';
-import {
-  MatDrawerContainer,
-  MatDrawer,
-  MatDrawerContent,
-} from '@angular/material/sidenav';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
-import { map, Observable } from 'rxjs';
 import { PostCardComponent } from '../../shared/components/post-card/post-card.component';
+import { MOCK_POSTS } from './data';
+import { PostService } from '../../core/services/post.service';
+import { PostResponse } from '../../shared/models/api/post.model';
+
 @Component({
   selector: 'app-feed',
   imports: [
@@ -29,11 +23,14 @@ import { PostCardComponent } from '../../shared/components/post-card/post-card.c
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css',
 })
-export class FeedComponent {
+export class FeedComponent implements OnInit, OnDestroy {
   protected readonly isMobile = signal(true);
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
+  private readonly postService = inject(PostService);
+
+  public data: PostResponse[] = [];
 
   constructor() {
     const media = inject(MediaMatcher);
@@ -43,6 +40,12 @@ export class FeedComponent {
     this._mobileQueryListener = () =>
       this.isMobile.set(this._mobileQuery.matches);
     this._mobileQuery.addEventListener('change', this._mobileQueryListener);
+  }
+
+  ngOnInit(): void {
+    this.postService.getPosts().subscribe(posts => {
+      this.data = posts;
+    });
   }
 
   ngOnDestroy(): void {
