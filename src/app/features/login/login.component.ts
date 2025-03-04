@@ -9,6 +9,8 @@ import { Router, RouterModule } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
 import { passwordStrengthValidator } from '../../shared/validators/strong-password-validator';
+import { ScreenService } from '../../core/services/screen.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +30,9 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private screenService = inject(ScreenService);
+  private screenSubscription!: Subscription;
+
   registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: [
@@ -43,15 +48,19 @@ export class LoginComponent {
   errorMessage = '';
   loading = false;
 
-  isDesktop = window.innerWidth >= 1024;
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.isDesktop = window.innerWidth >= 1024;
-  }
+  isDesktop = false;
 
   ngOnInit() {
-    this.isDesktop = window.innerWidth >= 1024;
+    this.screenSubscription = this.screenService.isDesktop$.subscribe(
+      isDesktop => {
+        this.isDesktop = isDesktop;
+      }
+    );
+  }
+  ngOnDestroy() {
+    if (this.screenSubscription) {
+      this.screenSubscription.unsubscribe();
+    }
   }
 
   onSubmit() {

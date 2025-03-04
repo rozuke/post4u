@@ -5,9 +5,18 @@ import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarModule,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 import { AuthService } from '../../core/services/auth.service';
 import { passwordStrengthValidator } from '../../shared/validators/strong-password-validator';
+import { ScreenService } from '../../core/services/screen.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,6 +26,7 @@ import { passwordStrengthValidator } from '../../shared/validators/strong-passwo
     MatFormFieldModule,
     NgIf,
     MatInputModule,
+    MatSnackBarModule,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
@@ -24,6 +34,10 @@ import { passwordStrengthValidator } from '../../shared/validators/strong-passwo
 export class SignUpComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private screenService = inject(ScreenService);
+  private screenSubscription!: Subscription;
+  private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
   registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: [
@@ -38,6 +52,23 @@ export class SignUpComponent {
 
   errorMessage = '';
   loading = false;
+  isDesktop = false;
+
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
+  ngOnInit() {
+    this.screenSubscription = this.screenService.isDesktop$.subscribe(
+      isDesktop => {
+        this.isDesktop = isDesktop;
+      }
+    );
+  }
+  ngOnDestroy() {
+    if (this.screenSubscription) {
+      this.screenSubscription.unsubscribe();
+    }
+  }
 
   onSubmit() {
     if (this.registerForm.invalid || this.loading) return;
@@ -47,12 +78,27 @@ export class SignUpComponent {
 
     this.authService.register(email!, password!).subscribe({
       next: response => {
-        console.log('register succesfull');
-        console.log(response);
         this.loading = false;
+        this.snackBar.open('Registration successful!', 'Close', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          this.authService.login(email!, password!).subscribe({
+            next: response => {
+              this.loading = false;
+              this.router.navigate(['/']);
+            },
+            error: error => {
+              this.errorMessage = `${error}`;
+              this.loading = false;
+            },
+          });
+        }, 2000);
       },
-      error: () => {
-        this.errorMessage = 'Error en el registro. Intenta nuevamente.';
+      error: error => {
+        this.errorMessage = `${error}`;
         this.loading = false;
       },
     });
