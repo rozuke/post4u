@@ -6,9 +6,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { PostCardComponent } from '../../shared/components/post-card/post-card.component';
-import { MOCK_POSTS } from './data';
 import { PostService } from '../../core/services/post.service';
 import { PostResponse } from '../../shared/models/api/post.model';
+import { InitialsPipe } from '../../shared/pipes/initials.pipe';
+import { TimeAgoPipe } from '../../shared/pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-feed',
@@ -19,6 +20,8 @@ import { PostResponse } from '../../shared/models/api/post.model';
     MatSidenavModule,
     MatListModule,
     PostCardComponent,
+    InitialsPipe,
+    TimeAgoPipe,
   ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css',
@@ -44,7 +47,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe(posts => {
-      this.data = posts;
+      this.data = posts.reverse();
     });
   }
 

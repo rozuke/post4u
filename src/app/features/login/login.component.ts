@@ -11,6 +11,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { passwordStrengthValidator } from '../../shared/validators/strong-password-validator';
 import { ScreenService } from '../../core/services/screen.service';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,7 @@ export class LoginComponent {
   private router = inject(Router);
   private screenService = inject(ScreenService);
   private screenSubscription!: Subscription;
+  private snackBar = inject(MatSnackBar);
 
   registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -51,6 +53,16 @@ export class LoginComponent {
   isDesktop = false;
 
   ngOnInit() {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { sessionExpired: boolean };
+    if (state?.sessionExpired) {
+      this.snackBar.open('Session expired. Please log in again.', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+    }
+
     this.screenSubscription = this.screenService.isDesktop$.subscribe(
       isDesktop => {
         this.isDesktop = isDesktop;

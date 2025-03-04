@@ -31,7 +31,12 @@
 
     <mat-sidenav-content class="main-container">
       @for (item of data; track $index) {
-        <app-post-card ></app-post-card>
+        <app-post-card
+          [avatar]="item.author.username | initials"
+          [title]="item.author.username"
+          [content]="item.text"
+          [subtitle]="item.createdAt | timeAgo"
+        ></app-post-card>
       }
     </mat-sidenav-content>
   </mat-sidenav-container>

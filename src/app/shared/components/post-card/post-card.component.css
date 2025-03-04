@@ -3,7 +3,7 @@
   background-color: var(--mat-sys-surface-container-lowest);
   border-radius: 0;
   border-top: none;
-  height: 260px;
+  height: 228px;
   max-height: 260px;
 }
 
@@ -20,13 +20,13 @@
   color: var(--mat-sys-on-secondary);
 }
 mat-card-title {
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
 }
 
 mat-card-subtitle {
-  font-weight: 300;
-  font-size: 16px;
+  font-weight: 200;
+  font-size: 14px;
 }
 
 .card-content-container {
@@ -36,10 +36,11 @@ mat-card-subtitle {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: 7.5em;
+  /* max-height: 7.5em; */
 }
 .card-content-container p {
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 500;
 }
 .comment-tag-card {
   display: flex;
