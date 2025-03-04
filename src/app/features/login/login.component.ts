@@ -12,6 +12,7 @@ import { passwordStrengthValidator } from '../../shared/validators/strong-passwo
 import { ScreenService } from '../../core/services/screen.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,7 @@ export class LoginComponent {
   private screenService = inject(ScreenService);
   private screenSubscription!: Subscription;
   private snackBar = inject(MatSnackBar);
+  private userService = inject(UserService);
 
   registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -82,9 +84,11 @@ export class LoginComponent {
     const { email, password } = this.registerForm.value;
 
     this.authService.login(email!, password!).subscribe({
-      next: response => {
-        this.loading = false;
-        this.router.navigate(['/']);
+      next: () => {
+        this.userService.getProfile().subscribe(() => {
+          this.loading = false;
+          this.router.navigate(['/']);
+        });
       },
       error: error => {
         this.errorMessage = `${error}`;

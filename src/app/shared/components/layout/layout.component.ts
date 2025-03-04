@@ -33,7 +33,7 @@ import { filter } from 'rxjs/operators';
 export class LayoutComponent implements OnDestroy, OnInit {
   protected readonly isMobile = signal(true);
   private readonly router = inject(Router);
-  public showActionsContainer = false;
+  public showActionsContainer = true;
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;

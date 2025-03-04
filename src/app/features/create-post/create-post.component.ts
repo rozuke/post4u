@@ -12,6 +12,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { wordCountValidator } from '../../shared/validators/word-count-validator';
 import { NgIf } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { PostDTO } from '../../shared/models/api/post.model';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-create-post',
@@ -20,6 +23,7 @@ import { NgIf } from '@angular/common';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
+    RouterModule,
     NgIf,
   ],
   templateUrl: './create-post.component.html',
@@ -29,6 +33,8 @@ export class CreatePostComponent {
   private readonly fb = inject(FormBuilder);
   private readonly postService = inject(PostService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
 
   public postForm: FormGroup = this.fb.group({
     text: [
@@ -42,13 +48,25 @@ export class CreatePostComponent {
       return;
     }
 
-    this.postService.createPost(this.postForm.value).subscribe({
+    const newPost: PostDTO = {
+      author: this.userService.getUserId(),
+      text: this.postForm.value.text,
+    };
+
+    this.postService.createPost(newPost).subscribe({
       next: () => {
-        this.snackBar.open('Post created successfully!', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        });
+        this.snackBar
+          .open('Post created successfully!', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          })
+          .afterDismissed()
+          .subscribe(() => {
+            this.router.navigate(['/']).then(() => {
+              window.location.reload();
+            });
+          });
         this.postForm.reset();
       },
       error: () => {
