@@ -5,7 +5,7 @@ import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
 import { passwordStrengthValidator } from '../../shared/validators/strong-password-validator';
@@ -27,6 +27,7 @@ import { passwordStrengthValidator } from '../../shared/validators/strong-passwo
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private router = inject(Router);
   registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: [
@@ -59,14 +60,13 @@ export class LoginComponent {
     this.loading = true;
     const { email, password } = this.registerForm.value;
 
-    this.authService.register(email!, password!).subscribe({
+    this.authService.login(email!, password!).subscribe({
       next: response => {
-        console.log('register succesfull');
-        console.log(response);
         this.loading = false;
+        this.router.navigate(['/']);
       },
-      error: () => {
-        this.errorMessage = 'Error en el registro. Intenta nuevamente.';
+      error: error => {
+        this.errorMessage = `${error}`;
         this.loading = false;
       },
     });

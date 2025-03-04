@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
 import { environment } from '../../../environments/environments';
+import { LoginResponse } from '../../shared/models/login.response.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly API_URL = `${environment.apiURL}/auth`;
   private http = inject(HttpClient);
-  isAuthenticated = signal(false);
 
   private get storedToken(): string | null {
     return localStorage.getItem('access_token');
@@ -19,12 +19,15 @@ export class AuthService {
 
   private setToken(token: string): void {
     localStorage.setItem('access_token', token);
-    this.isAuthenticated.set(true);
   }
 
   removeToken(): void {
     localStorage.removeItem('access_token');
-    this.isAuthenticated.set(false);
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    return !!token;
   }
 
   register(email: string, password: string) {
@@ -38,10 +41,19 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post(`${this.API_URL}/login`, { email, password }).pipe(
-      catchError(error => {
-        return throwError(() => new Error('Login failed'));
+    return this.http
+      .post<LoginResponse>(`${this.API_URL}/login`, {
+        username: email,
+        password,
       })
-    );
+      .pipe(
+        map(response => {
+          this.setToken(response.access_token);
+          return response;
+        }),
+        catchError(error => {
+          return throwError(() => new Error('Login failed'));
+        })
+      );
   }
 }
