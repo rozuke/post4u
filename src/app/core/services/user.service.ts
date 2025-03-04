@@ -10,21 +10,28 @@ import { environment } from '../../../environments/environments';
 export class UserService {
   private readonly apiUrl = environment.apiURL;
   private readonly http = inject(HttpClient);
-  private userId = '';
 
-  setUserId(id: string): void {
-    this.userId = id;
+  setUserId(id: string, userName: string): void {
+    sessionStorage.setItem('userId', id);
+    sessionStorage.setItem('userName', userName);
   }
 
   getUserId(): string {
-    return this.userId;
+    return sessionStorage.getItem('userId') || '';
+  }
+  getUserName(): string {
+    return sessionStorage.getItem('userName') || '';
   }
 
   getProfile() {
     return this.http.get<UserProfile>(`${this.apiUrl}/user/profile`).pipe(
       tap(profile => {
-        this.setUserId(profile._id);
+        this.setUserId(profile._id, profile.username);
       })
     );
+  }
+  clearUser(): void {
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('userName');
   }
 }

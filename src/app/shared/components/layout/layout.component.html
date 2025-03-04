@@ -42,7 +42,11 @@
           </button>
         </p>
         <p>
-          <button mat-button class="custom-nav-button">
+          <button
+            [routerLink]="['/user', userId]"
+            mat-button
+            class="custom-nav-button"
+          >
             <mat-icon>person</mat-icon>
             Profile
           </button>

@@ -1,0 +1,16 @@
+<div class="profile-container">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <div class="header">
+        <div mat-card-avatar class="avatar">{{ userName | initials }}</div>
+        <mat-card-title>{{ userName }}</mat-card-title>
+      </div>
+    </mat-card-header>
+  </mat-card>
+  <div class="content-container">
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Posts">Content 1</mat-tab>
+      <mat-tab label="Comments">Content 2</mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

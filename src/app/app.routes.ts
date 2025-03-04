@@ -5,6 +5,7 @@ import { FeedComponent } from './features/feed/feed.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { CreatePostComponent } from './features/create-post/create-post.component';
+import { UserProfileComponent } from './features/user-profile/user-profile.component';
 
 export const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
@@ -17,6 +18,11 @@ export const routes: Routes = [
       {
         path: 'new-post',
         component: CreatePostComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'user/:userId',
+        component: UserProfileComponent,
         canActivate: [authGuard],
       },
     ],

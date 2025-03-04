@@ -14,6 +14,7 @@ import {
 } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 import { filter } from 'rxjs/operators';
+import { UserService } from '../../../core/services/user.service';
 @Component({
   selector: 'app-layout',
   imports: [
@@ -33,10 +34,12 @@ import { filter } from 'rxjs/operators';
 export class LayoutComponent implements OnDestroy, OnInit {
   protected readonly isMobile = signal(true);
   private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
   public showActionsContainer = true;
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
+  public userId = '';
 
   constructor() {
     const media = inject(MediaMatcher);
@@ -53,6 +56,7 @@ export class LayoutComponent implements OnDestroy, OnInit {
       .subscribe((event: NavigationEnd) => {
         this.showActionsContainer = event.urlAfterRedirects === '/';
       });
+    this.userId = this.userService.getUserId();
   }
 
   ngOnDestroy(): void {
