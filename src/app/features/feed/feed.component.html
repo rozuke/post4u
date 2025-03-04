@@ -1,5 +1,5 @@
 <div class="pots-container">
-  @for (item of data; track $index) {
+  @for (item of displayedPosts; track $index) {
     <app-post-card
       class="post-card"
       [avatar]="item.author.username | initials"
@@ -7,5 +7,10 @@
       [content]="item.text"
       [subtitle]="item.createdAt | timeAgo"
     ></app-post-card>
+  }
+  @if (loading) {
+    <div class="spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
   }
 </div>
