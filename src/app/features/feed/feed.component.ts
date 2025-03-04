@@ -15,6 +15,7 @@ import {
 } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { map, Observable } from 'rxjs';
+import { PostCardComponent } from '../../shared/components/post-card/post-card.component';
 @Component({
   selector: 'app-feed',
   imports: [
@@ -23,6 +24,7 @@ import { map, Observable } from 'rxjs';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    PostCardComponent,
   ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css',

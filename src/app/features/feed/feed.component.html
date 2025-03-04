@@ -1,9 +1,9 @@
-<div class="example-container" [class.example-is-mobile]="isMobile()">
+<div class="feed-container" [class.example-is-mobile]="isMobile()">
   <mat-toolbar class="navbar-container">
     @if (isMobile()) {
       <button
         mat-icon-button
-        aria-label="Example icon-button with menu icon"
+        aria-label="Menu navbar button"
         (click)="snav.toggle()"
       >
         <mat-icon>menu</mat-icon>
@@ -15,7 +15,7 @@
     </div>
   </mat-toolbar>
 
-  <mat-sidenav-container class="example-sidenav-container">
+  <mat-sidenav-container class="sidenav-main-container">
     <mat-sidenav
       #snav
       [mode]="isMobile() ? 'over' : 'side'"
@@ -30,7 +30,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="main-container"
-      >hola mundo
+      ><app-post-card></app-post-card>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

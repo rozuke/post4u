@@ -1,0 +1,24 @@
+<mat-card class="card" appearance="outlined">
+  <mat-card-header class="header-card-container">
+    <div mat-card-avatar class="header-image">
+      <span>{{ avatar }}</span>
+    </div>
+    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-subtitle>{{ subtitle }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="card-content-container">
+    <p>
+      {{ content }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="comment-tag-card no-shadow" mat-fab extended>
+      <mat-icon class="material-icons-outlined comment-card-icon"
+        >comment</mat-icon
+      ><span
+        >{{ commentsCount }}
+        {{ commentsCount === 1 ? 'comment' : 'comments' }}</span
+      >
+    </div>
+  </mat-card-actions>
+</mat-card>
