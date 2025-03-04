@@ -5,14 +5,14 @@
 .view-container {
   padding: 16px;
 }
-h1{
-    font-size: 48px;
+h1 {
+  font-size: 48px;
 }
 h2 {
   margin: 36px 0;
 }
 a {
-  color: var(--color-primary);
+  color: var(--mat-sys-primary);
 }
 .title-container {
   max-width: 500px;
@@ -69,7 +69,7 @@ a {
     font-weight: 600;
     text-align: center;
     line-height: normal;
-    color: #ababab;
+    color: var(--mat-sys-inverse-surface);
     letter-spacing: 4.8px;
   }
   .register-form {

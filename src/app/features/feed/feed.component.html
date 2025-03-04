@@ -1,1 +1,36 @@
-<p>Welcome to feed</p>
+<div class="example-container" [class.example-is-mobile]="isMobile()">
+  <mat-toolbar class="navbar-container">
+    @if (isMobile()) {
+      <button
+        mat-icon-button
+        aria-label="Example icon-button with menu icon"
+        (click)="snav.toggle()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    }
+
+    <div class="margin-center container-logo">
+      <img src="assets/logo.svg" alt="Logo Post4U" />
+    </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav
+      #snav
+      [mode]="isMobile() ? 'over' : 'side'"
+      [fixedInViewport]="isMobile()"
+      fixedTopGap="56"
+      [opened]="!isMobile()"
+      class="sidenav-container"
+    >
+      <p>Option 1</p>
+      <p>Option 2</p>
+      <p>Option 3</p>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-container"
+      >hola mundo
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
