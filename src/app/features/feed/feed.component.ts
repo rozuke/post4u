@@ -2,6 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
@@ -10,7 +11,7 @@ import { PostService } from '../../core/services/post.service';
 import { PostResponse } from '../../shared/models/api/post.model';
 import { InitialsPipe } from '../../shared/pipes/initials.pipe';
 import { TimeAgoPipe } from '../../shared/pipes/time-ago.pipe';
-
+import { MatGridListModule } from '@angular/material/grid-list';
 @Component({
   selector: 'app-feed',
   imports: [
@@ -22,6 +23,8 @@ import { TimeAgoPipe } from '../../shared/pipes/time-ago.pipe';
     PostCardComponent,
     InitialsPipe,
     TimeAgoPipe,
+    MatGridListModule,
+    NgIf,
   ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css',

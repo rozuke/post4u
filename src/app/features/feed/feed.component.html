@@ -1,17 +1,25 @@
 <div class="feed-container" [class.example-is-mobile]="isMobile()">
   <mat-toolbar class="navbar-container">
-    @if (isMobile()) {
-      <button
-        mat-icon-button
-        aria-label="Menu navbar button"
-        (click)="snav.toggle()"
-      >
-        <mat-icon>menu</mat-icon>
-      </button>
-    }
+    <div class="navbar-content">
+      @if (isMobile()) {
+        <button
+          mat-icon-button
+          aria-label="Menu navbar button"
+          (click)="snav.toggle()"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
 
-    <div class="margin-center container-logo">
-      <img src="assets/logo.svg" alt="Logo Post4U" />
+      <div class="margin-center container-logo">
+        <img src="assets/logo.svg" alt="Logo Post4U" />
+        <span *ngIf="!isMobile()">Post4U</span>
+      </div>
+      <button class="create-button" mat-button>
+        <mat-icon class="material-icons-outlined comment-card-icon"
+          >add</mat-icon
+        ><span>Create</span>
+      </button>
     </div>
   </mat-toolbar>
 
@@ -30,13 +38,23 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="main-container">
-      @for (item of data; track $index) {
-        <app-post-card
-          [avatar]="item.author.username | initials"
-          [title]="item.author.username"
-          [content]="item.text"
-          [subtitle]="item.createdAt | timeAgo"
-        ></app-post-card>
+      <div class="pots-container">
+        @for (item of data; track $index) {
+          <app-post-card
+            class="post-card"
+            [avatar]="item.author.username | initials"
+            [title]="item.author.username"
+            [content]="item.text"
+            [subtitle]="item.createdAt | timeAgo"
+          ></app-post-card>
+        }
+      </div>
+      @if (!isMobile()) {
+        <div class="actions-container">
+          <p>action 1</p>
+          <p>action 3</p>
+          <p>action 2</p>
+        </div>
       }
     </mat-sidenav-content>
   </mat-sidenav-container>

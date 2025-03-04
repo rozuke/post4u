@@ -3,8 +3,12 @@
   background-color: var(--mat-sys-surface-container-lowest);
   border-radius: 0;
   border-top: none;
+  width: 100%;
+  border-left: none;
+  border-right: none;
   height: 228px;
   max-height: 260px;
+  cursor: pointer;
 }
 
 .header-image {
@@ -36,7 +40,6 @@ mat-card-subtitle {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* max-height: 7.5em; */
 }
 .card-content-container p {
   font-size: 18px;
@@ -60,4 +63,12 @@ mat-card-subtitle {
 }
 .no-shadow {
   box-shadow: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .card {
+    padding: 0 12px;
+    width: 75%;
+    margin-left: auto;
+  }
 }
