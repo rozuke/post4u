@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environments';
 import { HttpClient } from '@angular/common/http';
-import { PostResponse } from '../../shared/models/api/post.model';
+import { PostDTO, PostResponseDTO } from '../../shared/models/api/post.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,10 @@ export class PostService {
   private http = inject(HttpClient);
 
   getPosts() {
-    return this.http.get<PostResponse[]>(`${this.API_URL}`);
+    return this.http.get<PostResponseDTO[]>(`${this.API_URL}`);
+  }
+
+  createPost(post: PostDTO) {
+    return this.http.post(`${this.API_URL}`, post);
   }
 }

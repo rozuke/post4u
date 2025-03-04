@@ -1,0 +1,25 @@
+<div class="form-post-container">
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-post">
+    <h2 class="title-font-style">Create a post</h2>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Post Content</mat-label>
+      <textarea matInput formControlName="text" rows="5"></textarea>
+      <mat-error
+        *ngIf="postForm.get('text')?.invalid && postForm.get('text')?.touched"
+      >
+        Post content is required
+      </mat-error>
+      <mat-error *ngIf="postForm.get('text')?.hasError('wordCount')">
+        Post content cannot exceed 120 words
+      </mat-error>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="postForm.invalid"
+    >
+      Create Post
+    </button>
+  </form>
+</div>

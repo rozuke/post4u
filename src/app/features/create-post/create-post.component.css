@@ -1,0 +1,31 @@
+.form-post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+}
+.form-post {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.form-post button {
+  align-self: flex-end;
+  width: 160px;
+}
+
+@media screen and (min-width: 1024px) {
+  .form-post {
+    width: 80%;
+    align-items: end;
+  }
+  .form-post h2 {
+    width: 80%;
+    font-size: 32px;
+    font-weight: 500;
+  }
+  mat-form-field {
+    width: 80%;
+  }
+}

@@ -15,11 +15,13 @@
         <img src="assets/logo.svg" alt="Logo Post4U" />
         <span *ngIf="!isMobile()">Post4U</span>
       </div>
-      <button class="create-button" mat-button>
-        <mat-icon class="material-icons-outlined comment-card-icon"
-          >add</mat-icon
-        ><span>Create</span>
-      </button>
+      <a routerLink="/new-post">
+        <button class="create-button" mat-button>
+          <mat-icon class="material-icons-outlined comment-card-icon"
+            >add</mat-icon
+          ><span>Create</span>
+        </button>
+      </a>
     </div>
   </mat-toolbar>
 
@@ -32,9 +34,27 @@
       [opened]="!isMobile()"
       class="sidenav-container"
     >
-      <p>Option 1</p>
-      <p>Option 2</p>
-      <p>Option 3</p>
+      <mat-nav-list class="custom-sidenav-content">
+        <p>
+          <button mat-button class="custom-nav-button">
+            <mat-icon>home</mat-icon>
+            Home
+          </button>
+        </p>
+        <p>
+          <button mat-button class="custom-nav-button">
+            <mat-icon>person</mat-icon>
+            Profile
+          </button>
+        </p>
+        <p>
+          <button mat-button class="custom-nav-button">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </p>
+        <mat-divider style="margin-top: 20px"></mat-divider>
+      </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content class="main-container">
@@ -43,9 +63,13 @@
       </div>
       @if (!isMobile()) {
         <div class="actions-container">
-          <p>action 1</p>
-          <p>action 3</p>
-          <p>action 2</p>
+          @if (showActionsContainer) {
+            <div>
+              <p>action 1</p>
+              <p>action 3</p>
+              <p>action 2</p>
+            </div>
+          }
         </div>
       }
     </mat-sidenav-content>

@@ -1,7 +1,7 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { PostCardComponent } from '../../shared/components/post-card/post-card.component';
 import { PostService } from '../../core/services/post.service';
-import { PostResponse } from '../../shared/models/api/post.model';
+import { PostDTO, PostResponseDTO } from '../../shared/models/api/post.model';
 import { InitialsPipe } from '../../shared/pipes/initials.pipe';
 import { TimeAgoPipe } from '../../shared/pipes/time-ago.pipe';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,8 +21,8 @@ export class FeedComponent implements OnInit {
   private readonly postService = inject(PostService);
   private readonly snackBar = inject(MatSnackBar);
 
-  public allPosts: PostResponse[] = [];
-  public displayedPosts: PostResponse[] = [];
+  public allPosts: PostResponseDTO[] = [];
+  public displayedPosts: PostResponseDTO[] = [];
   public loading = false;
   public hasMore = true;
 

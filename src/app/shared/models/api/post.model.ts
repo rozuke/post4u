@@ -1,4 +1,4 @@
-interface PostResponse {
+interface PostResponseDTO {
   _id: string;
   text: string;
   author: Author;
@@ -20,4 +20,4 @@ interface Author {
   __v: number;
 }
 
-export type { PostResponse, PostDTO };
+export type { PostResponseDTO, PostDTO };
