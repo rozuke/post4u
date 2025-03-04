@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AuthService } from '../../core/services/auth.service';
+import { passwordStrengthValidator } from '../../shared/validators/strong-password-validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,19 +31,13 @@ export class SignUpComponent {
       [
         Validators.required,
         Validators.minLength(8),
-        this.passwordStrengthValidator,
+        passwordStrengthValidator(),
       ],
     ],
   });
 
   errorMessage = '';
   loading = false;
-
-  private passwordStrengthValidator(control: any) {
-    const hasLetter = /[A-Za-z]/.test(control.value);
-    const hasNumber = /\d/.test(control.value);
-    return hasLetter && hasNumber ? null : { weakPassword: true };
-  }
 
   onSubmit() {
     if (this.registerForm.invalid || this.loading) return;

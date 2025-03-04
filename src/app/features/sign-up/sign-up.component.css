@@ -1,6 +1,5 @@
 .view-container {
   padding: 16px;
-  height: 100%;
 }
 
 h2 {
@@ -19,12 +18,11 @@ h2 {
   }
 
   .submit-button {
+    
     height: 48px;
+
     font-size: var(--mat-sys-body-medium);
-    position: fixed;
-    left: 16px;
-    right: 16px;
-    bottom: 32px;
+    width: 100%;
   }
 
   .error-message {

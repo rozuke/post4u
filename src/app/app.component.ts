@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SignUpComponent } from './features/sign-up/sign-up.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SignUpComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Post4U';
 }
