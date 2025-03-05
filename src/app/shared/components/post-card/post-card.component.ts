@@ -37,4 +37,8 @@ export class PostCardComponent {
       window.location.reload();
     });
   }
+
+  editPostHandler() {
+    this.router.navigate(['/edit-post', this.postId]);
+  }
 }

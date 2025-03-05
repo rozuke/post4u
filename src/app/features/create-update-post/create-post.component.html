@@ -1,6 +1,8 @@
 <div class="form-post-container">
   <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-post">
-    <h2 class="title-font-style">Create a post</h2>
+    <h2 class="title-font-style">
+      {{ isEditMode ? 'Edit Post' : 'Create a post' }}
+    </h2>
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Post Content</mat-label>
       <textarea matInput formControlName="text" rows="5"></textarea>
@@ -19,7 +21,7 @@
       type="submit"
       [disabled]="postForm.invalid"
     >
-      Create Post
+      {{ isEditMode ? 'Update Post' : 'Create Post' }}
     </button>
   </form>
 </div>

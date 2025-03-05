@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,12 +12,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { wordCountValidator } from '../../shared/validators/word-count-validator';
 import { NgIf } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Location } from '@angular/common';
 import { PostDTO } from '../../shared/models/api/post.model';
 import { UserService } from '../../core/services/user.service';
 
 @Component({
-  selector: 'app-create-post',
+  selector: 'app-create-update-post',
   imports: [
     ReactiveFormsModule,
     MatInputModule,
@@ -29,12 +30,14 @@ import { UserService } from '../../core/services/user.service';
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.css',
 })
-export class CreatePostComponent {
+export class CreateUpdatePostComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly postService = inject(PostService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly userService = inject(UserService);
+  private readonly location = inject(Location);
 
   public postForm: FormGroup = this.fb.group({
     text: [
@@ -42,6 +45,27 @@ export class CreatePostComponent {
       [Validators.required, Validators.minLength(1), wordCountValidator(120)],
     ],
   });
+
+  public isEditMode = false;
+  private postId: string | null = null;
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.postId = params.get('postId');
+      if (this.postId) {
+        this.isEditMode = true;
+        this.loadPostData(this.postId);
+      }
+    });
+  }
+
+  private loadPostData(postId: string): void {
+    this.postService.getPostById(postId).subscribe(post => {
+      this.postForm.patchValue({
+        text: post.text,
+      });
+    });
+  }
 
   onSubmit(): void {
     if (this.postForm.invalid) {
@@ -53,6 +77,42 @@ export class CreatePostComponent {
       text: this.postForm.value.text,
     };
 
+    if (this.isEditMode && this.postId) {
+      this.updatePost(newPost);
+    } else {
+      this.savePost(newPost);
+    }
+  }
+
+  private updatePost(updatedPost: PostDTO): void {
+    this.postService.patchPost(this.postId!, updatedPost).subscribe({
+      next: () => {
+        this.snackBar
+          .open('Post updated successfully!', 'Close', {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          })
+          .afterDismissed()
+          .subscribe(() => {
+            this.location.back();
+          });
+      },
+      error: () => {
+        this.snackBar.open(
+          'Failed to update post. Please try again.',
+          'Close',
+          {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          }
+        );
+      },
+    });
+  }
+
+  private savePost(newPost: PostDTO) {
     this.postService.createPost(newPost).subscribe({
       next: () => {
         this.snackBar
@@ -63,9 +123,7 @@ export class CreatePostComponent {
           })
           .afterDismissed()
           .subscribe(() => {
-            this.router.navigate(['/']).then(() => {
-              window.location.reload();
-            });
+            this.location.back();
           });
         this.postForm.reset();
       },

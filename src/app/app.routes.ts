@@ -4,7 +4,7 @@ import { LoginComponent } from './features/login/login.component';
 import { FeedComponent } from './features/feed/feed.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { LayoutComponent } from './shared/components/layout/layout.component';
-import { CreatePostComponent } from './features/create-post/create-post.component';
+import { CreateUpdatePostComponent } from './features/create-update-post/create-post.component';
 import { UserProfileComponent } from './features/user-profile/user-profile.component';
 
 export const routes: Routes = [
@@ -17,7 +17,12 @@ export const routes: Routes = [
       { path: '', component: FeedComponent, canActivate: [authGuard] },
       {
         path: 'new-post',
-        component: CreatePostComponent,
+        component: CreateUpdatePostComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'edit-post/:postId',
+        component: CreateUpdatePostComponent,
         canActivate: [authGuard],
       },
       {

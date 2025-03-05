@@ -15,6 +15,14 @@ export class PostService {
     return this.http.get<PostResponseDTO[]>(`${this.API_URL}`);
   }
 
+  getPostById(postId: string) {
+    return this.http.get<PostResponseDTO>(`${this.API_URL}/${postId}`);
+  }
+
+  patchPost(postId: string, post: PostDTO) {
+    return this.http.patch(`${this.API_URL}/${postId}`, post);
+  }
+
   createPost(post: PostDTO) {
     return this.http.post(`${this.API_URL}`, post);
   }
