@@ -9,7 +9,20 @@
   </mat-card>
   <div class="content-container">
     <mat-tab-group animationDuration="0ms">
-      <mat-tab label="Posts">Content 1</mat-tab>
+      <mat-tab label="Posts">
+        <div>
+          @for (item of posts; track $index) {
+            <app-post-card
+              class="post-card"
+              [avatar]="item.author.username | initials"
+              [title]="item.author.username"
+              [content]="item.text"
+              [subtitle]="item.createdAt | timeAgo"
+              [showBulletOptions]="true"
+            ></app-post-card>
+          }
+        </div>
+      </mat-tab>
       <mat-tab label="Comments">Content 2</mat-tab>
     </mat-tab-group>
   </div>

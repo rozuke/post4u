@@ -6,6 +6,7 @@
       [title]="item.author.username"
       [content]="item.text"
       [subtitle]="item.createdAt | timeAgo"
+      [showBulletOptions]="false"
     ></app-post-card>
   }
   @if (loading) {

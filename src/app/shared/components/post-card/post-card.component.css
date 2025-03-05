@@ -10,7 +10,15 @@
   max-height: 260px;
   cursor: pointer;
 }
-
+.header-card-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.user-data-container {
+  display: flex;
+  gap: 8px;
+}
 .header-image {
   display: flex;
   align-items: center;
