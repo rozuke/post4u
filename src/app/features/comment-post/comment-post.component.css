@@ -1,5 +1,5 @@
 .layout-container {
-  padding: 0 16px 16px 16px;
+  padding: 20px 16px 16px 16px;
 }
 
 mat-card {
@@ -84,6 +84,12 @@ mat-card-title {
 .comment-box:focus {
   outline: none;
 }
+
+.user-comment-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .avatar-comment {
   display: flex;
   align-items: center;
@@ -115,6 +121,9 @@ mat-card-title {
   margin-left: 50px;
 }
 @media screen and (min-width: 1024px) {
+  mat-card {
+    margin-left: 0;
+  }
   .profile-container {
     width: 80%;
     margin-left: auto;

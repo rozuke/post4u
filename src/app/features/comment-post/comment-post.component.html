@@ -43,14 +43,33 @@
   <div class="comments-container">
     @for (item of comments; track $index) {
       <div class="comment-container">
-        <div class="user-comment">
-          <div mat-card-avatar class="avatar-comment">
-            <span>{{ item.author.username | initials }}</span>
+        <div class="user-comment-header">
+          <div class="user-comment">
+            <div mat-card-avatar class="avatar-comment">
+              <span>{{ item.author.username | initials }}</span>
+            </div>
+            <p>
+              {{ item.author.username }} •
+              <span>{{ item.createdAt | timeAgo }}</span>
+            </p>
           </div>
-          <p>
-            {{ item.author.username }} •
-            <span>{{ item.createdAt | timeAgo }}</span>
-          </p>
+          <div>
+            @if (item.author._id === userId) {
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editPostHandler()">
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item (click)="deletePostHandler(item._id)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            }
+          </div>
         </div>
         <div class="user-comment-content">
           <p>{{ item.text }}</p>

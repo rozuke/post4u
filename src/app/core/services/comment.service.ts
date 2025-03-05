@@ -6,8 +6,6 @@ import {
   CommentResponseDTO,
   Comment,
 } from '../../shared/models/api/comment.model';
-import { map, Observable } from 'rxjs';
-import { mapCommentResponseToDTO } from '../../shared/utils/comment-mapper';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +24,9 @@ export class CommentService {
     return this.http.get<CommentResponseDTO[]>(`${this.API_URL}/comment`, {
       params,
     });
+  }
+
+  deleteComment(commentId: string) {
+    return this.http.delete(`${this.API_URL}/comment/${commentId}`);
   }
 }

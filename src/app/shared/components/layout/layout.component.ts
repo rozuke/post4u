@@ -59,6 +59,10 @@ export class LayoutComponent implements OnDestroy, OnInit {
     this.userId = this.userService.getUserId();
   }
 
+  redirectHome(): void {
+    this.router.navigate(['/']);
+  }
+
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }

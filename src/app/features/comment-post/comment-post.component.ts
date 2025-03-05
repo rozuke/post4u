@@ -16,10 +16,10 @@ import { ActivatedRoute } from '@angular/router';
 import { CommentService } from '../../core/services/comment.service';
 import { PostResponseDTO } from '../../shared/models/api/post.model';
 import { PostService } from '../../core/services/post.service';
-import {
-  CommentRequestDTO,
-  Comment,
-} from '../../shared/models/api/comment.model';
+import { CommentRequestDTO } from '../../shared/models/api/comment.model';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-comment-post',
@@ -32,6 +32,8 @@ import {
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatMenuModule,
+    MatIconModule,
   ],
   templateUrl: './comment-post.component.html',
   styleUrl: './comment-post.component.css',
@@ -41,9 +43,12 @@ export class CommentPostComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private commentService = inject(CommentService);
   private postService = inject(PostService);
+  private userService = inject(UserService);
   postData: PostResponseDTO = {} as PostResponseDTO;
   postId: string | null = null;
   comments: PostResponseDTO[] = [];
+
+  public userId: string | null = null;
 
   public commentForm: FormGroup;
   constructor() {
@@ -53,6 +58,7 @@ export class CommentPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userId = this.userService.getUserId();
     this.postId = this.route.snapshot.paramMap.get('postId');
     if (this.postId) {
       this.postService.getPostById(this.postId).subscribe(post => {
@@ -88,6 +94,16 @@ export class CommentPostComponent implements OnInit {
     this.commentService.postComment(newComment).subscribe(comment => {
       this.loadComments();
       this.commentForm.reset();
+    });
+  }
+
+  editPostHandler(): void {
+    console.log('Edit post');
+  }
+
+  deletePostHandler(commentId: string): void {
+    this.commentService.deleteComment(commentId).subscribe(() => {
+      this.loadComments();
     });
   }
 
