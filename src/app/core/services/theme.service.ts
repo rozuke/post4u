@@ -5,7 +5,8 @@ import { AppTheme } from '../../shared/models/app-theme.model';
   providedIn: 'root',
 })
 export class ThemeService {
-  appTheme = signal<string>('system');
+  private readonly THEME_KEY = 'appTheme';
+  appTheme = signal<string>(this.getStoredTheme() || 'system');
 
   themes: AppTheme[] = [
     {
@@ -28,6 +29,7 @@ export class ThemeService {
 
   setTheme(name: string) {
     this.appTheme.set(name);
+    this.storeTheme(name);
   }
 
   setSystemTheme = effect(() => {
@@ -39,4 +41,12 @@ export class ThemeService {
   selectedTheme = computed(() => {
     return this.themes.find(theme => theme.name === this.appTheme());
   });
+
+  private storeTheme(theme: string) {
+    localStorage.setItem(this.THEME_KEY, theme);
+  }
+
+  private getStoredTheme(): string | null {
+    return localStorage.getItem(this.THEME_KEY);
+  }
 }

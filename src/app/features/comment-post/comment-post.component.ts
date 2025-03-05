@@ -24,6 +24,8 @@ import {
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../core/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-comment-post',
@@ -48,6 +50,7 @@ export class CommentPostComponent implements OnInit {
   private commentService = inject(CommentService);
   private postService = inject(PostService);
   private userService = inject(UserService);
+  private dialog = inject(MatDialog);
   postData: PostResponseDTO = {} as PostResponseDTO;
   postId: string | null = null;
   comments: CommentResponseDTO[] = [];
@@ -82,6 +85,8 @@ export class CommentPostComponent implements OnInit {
       this.commentService
         .getCommentsByPostId(this.postId)
         .subscribe(comments => {
+          console.log('comments');
+          console.log(comments);
           this.comments = comments.reverse();
         });
     }
@@ -94,7 +99,7 @@ export class CommentPostComponent implements OnInit {
 
     const newComment: CommentRequestDTO = {
       text: this.commentForm.value.text,
-      author: this.postData.author._id,
+      author: this.userId!,
       post: this.postId!,
     };
 
@@ -131,8 +136,14 @@ export class CommentPostComponent implements OnInit {
   }
 
   deletePostHandler(commentId: string): void {
-    this.commentService.deleteComment(commentId).subscribe(() => {
-      this.loadComments();
+    const dialog = this.dialog.open(ConfirmDialogComponent);
+
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.commentService.deleteComment(commentId).subscribe(() => {
+          this.loadComments();
+        });
+      }
     });
   }
 

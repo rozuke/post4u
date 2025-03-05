@@ -50,7 +50,9 @@
             </div>
             <p>
               {{ item.author.username }} •
-              <span class="user-comment-date">{{ item.createdAt | timeAgo }}</span>
+              <span class="user-comment-date">{{
+                item.createdAt | timeAgo
+              }}</span>
               @if (item.createdAt !== item.updatedAt) {
                 • <span class="edit-text">Edited</span>
               }

@@ -8,8 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PostService } from '../../../core/services/post.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 @Component({
   selector: 'app-post-card',
   imports: [MatButtonModule, MatCardModule, MatIconModule, MatMenuModule],
@@ -20,6 +22,7 @@ import { PostService } from '../../../core/services/post.service';
 export class PostCardComponent {
   private readonly router = inject(Router);
   private readonly postService = inject(PostService);
+  private readonly dialog = inject(MatDialog);
   @Input() avatar: string = '';
   @Input() title: string = '';
   @Input() subtitle: string = '';
@@ -33,8 +36,14 @@ export class PostCardComponent {
   }
 
   deletePostHandler() {
-    this.postService.deletePost(this.postId).subscribe(() => {
-      window.location.reload();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.postService.deletePost(this.postId).subscribe(() => {
+          window.location.reload();
+        });
+      }
     });
   }
 
