@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
+import { NgIf, TitleCasePipe } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
@@ -17,6 +17,7 @@ import { filter } from 'rxjs/operators';
 import { UserService } from '../../../core/services/user.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
+import { ThemeService } from '../../../core/services/theme.service';
 @Component({
   selector: 'app-layout',
   imports: [
@@ -30,13 +31,15 @@ import { MatCardModule } from '@angular/material/card';
     MatDividerModule,
     RouterModule,
     MatMenuModule,
-    MatCardModule
+    MatCardModule,
+    TitleCasePipe,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
 export class LayoutComponent implements OnDestroy, OnInit {
   protected readonly isMobile = signal(true);
+  protected themeService = inject(ThemeService);
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
   public showActionsContainer = true;

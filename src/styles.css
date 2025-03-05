@@ -8,8 +8,8 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   transition:
-    background-color 0.3s,
-    color 0.3s;
+    background-color 1.2s,
+    color 1.2s;
 }
 
 img {
