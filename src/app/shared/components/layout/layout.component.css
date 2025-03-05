@@ -109,10 +109,4 @@ p button.mat-mdc-button.custom-nav-button:hover {
     width: 55%;
   }
 
-  .actions-container {
-    width: 45%;
-    padding: 16px;
-    background-color: var(--mat-sys-surface-container-lowest);
-    height: 100%;
-  }
 }

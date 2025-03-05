@@ -24,10 +24,7 @@
           </button>
         </a>
         <div>
-          <button
-            mat-icon-button
-            [matMenuTriggerFor]="menu"
-          >
+          <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>{{ themeService.selectedTheme()!.icon }}</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
@@ -83,17 +80,19 @@
       <div class="main-container-content">
         <router-outlet></router-outlet>
       </div>
-      @if (!isMobile()) {
+      <!-- @if (!isMobile()) {
         <div class="actions-container">
-          @if (showActionsContainer) {
-            <div>
-              <p>action 1</p>
-              <p>action 3</p>
-              <p>action 2</p>
-            </div>
-          }
+          <div class="actions-content-container">
+            @if (showActionsContainer) {
+              <div>
+                <p>action 1</p>
+                <p>action 3</p>
+                <p>action 2</p>
+              </div>
+            }
+          </div>
         </div>
-      }
+      } -->
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
