@@ -1,5 +1,5 @@
 .layout-container {
-  padding: 20px 16px 16px 16px;
+  padding: 0px 16px 16px 16px;
 }
 
 mat-card {
@@ -112,7 +112,7 @@ mat-card-title {
   align-items: center;
   gap: 8px;
 }
-.user-comment span {
+.user-comment-date {
   font-size: 14px;
   font-weight: 200;
 }
@@ -120,7 +120,21 @@ mat-card-title {
   margin: 0;
   margin-left: 50px;
 }
+.edit-comment-buttons {
+  display: flex;
+  width: 30%;
+  gap: 12px;
+}
+.edit-comment-buttons button {
+  width: 80px;
+}
+.edit-text {
+  font-size: 12px;
+}
 @media screen and (min-width: 1024px) {
+  .layout-container {
+    padding-top: 20px;
+  }
   mat-card {
     margin-left: 0;
   }
@@ -132,5 +146,9 @@ mat-card-title {
   .comments-container {
     width: 80%;
     margin-left: auto;
+  }
+  .edit-comment-buttons {
+    width: 26%;
+    gap: 12px;
   }
 }

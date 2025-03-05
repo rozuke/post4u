@@ -29,4 +29,11 @@ export class CommentService {
   deleteComment(commentId: string) {
     return this.http.delete(`${this.API_URL}/comment/${commentId}`);
   }
+
+  pathComment(commentId: string, comment: CommentRequestDTO) {
+    return this.http.patch<Comment>(
+      `${this.API_URL}/comment/${commentId}`,
+      comment
+    );
+  }
 }

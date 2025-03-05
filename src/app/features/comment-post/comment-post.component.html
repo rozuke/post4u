@@ -50,7 +50,10 @@
             </div>
             <p>
               {{ item.author.username }} •
-              <span>{{ item.createdAt | timeAgo }}</span>
+              <span class="user-comment-date">{{ item.createdAt | timeAgo }}</span>
+              @if (item.createdAt !== item.updatedAt) {
+                • <span class="edit-text">Edited</span>
+              }
             </p>
           </div>
           <div>
@@ -59,7 +62,7 @@
                 <mat-icon>more_horiz</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="editPostHandler()">
+                <button mat-menu-item (click)="editCommentHandler(item)">
                   <mat-icon>edit</mat-icon>
                   <span>Edit</span>
                 </button>
@@ -72,7 +75,34 @@
           </div>
         </div>
         <div class="user-comment-content">
-          <p>{{ item.text }}</p>
+          @if (editingCommentId === item._id) {
+            <div class="comment-box-container" style="margin-left: 50px">
+              <form
+                [formGroup]="editCommentForm"
+                (ngSubmit)="onEditSubmit(item._id)"
+              >
+                <textarea
+                  class="comment-box"
+                  formControlName="text"
+                  (input)="autoResize($event)"
+                ></textarea>
+                <div class="edit-comment-buttons">
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    (click)="cancelEdit()"
+                  >
+                    Cancel
+                  </button>
+                  <button mat-flat-button type="submit" color="primary">
+                    Edit
+                  </button>
+                </div>
+              </form>
+            </div>
+          } @else {
+            <p>{{ item.text }}</p>
+          }
         </div>
       </div>
     }

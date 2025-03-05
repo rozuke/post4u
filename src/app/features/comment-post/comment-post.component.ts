@@ -16,7 +16,11 @@ import { ActivatedRoute } from '@angular/router';
 import { CommentService } from '../../core/services/comment.service';
 import { PostResponseDTO } from '../../shared/models/api/post.model';
 import { PostService } from '../../core/services/post.service';
-import { CommentRequestDTO } from '../../shared/models/api/comment.model';
+import {
+  CommentRequestDTO,
+  Comment,
+  CommentResponseDTO,
+} from '../../shared/models/api/comment.model';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../core/services/user.service';
@@ -46,13 +50,18 @@ export class CommentPostComponent implements OnInit {
   private userService = inject(UserService);
   postData: PostResponseDTO = {} as PostResponseDTO;
   postId: string | null = null;
-  comments: PostResponseDTO[] = [];
+  comments: CommentResponseDTO[] = [];
+  editingCommentId: string | null = null;
 
   public userId: string | null = null;
 
   public commentForm: FormGroup;
+  public editCommentForm: FormGroup;
   constructor() {
     this.commentForm = this.fb.group({
+      text: ['', [Validators.required, Validators.minLength(1)]],
+    });
+    this.editCommentForm = this.fb.group({
       text: ['', [Validators.required, Validators.minLength(1)]],
     });
   }
@@ -89,16 +98,36 @@ export class CommentPostComponent implements OnInit {
       post: this.postId!,
     };
 
-    console.log('NEW COMMENT', newComment);
-
     this.commentService.postComment(newComment).subscribe(comment => {
       this.loadComments();
       this.commentForm.reset();
     });
   }
 
-  editPostHandler(): void {
-    console.log('Edit post');
+  onEditSubmit(commentId: string): void {
+    if (this.editCommentForm.invalid) {
+      return;
+    }
+
+    const updatedComment: CommentRequestDTO = {
+      text: this.editCommentForm.value.text,
+      author: this.postData.author._id,
+      post: this.postId!,
+    };
+
+    this.commentService.pathComment(commentId, updatedComment).subscribe(() => {
+      this.loadComments();
+      this.editingCommentId = null;
+    });
+  }
+
+  editCommentHandler(comment: CommentResponseDTO): void {
+    this.editingCommentId = comment._id;
+    this.editCommentForm.patchValue({ text: comment.text });
+  }
+
+  cancelEdit(): void {
+    this.editingCommentId = null;
   }
 
   deletePostHandler(commentId: string): void {

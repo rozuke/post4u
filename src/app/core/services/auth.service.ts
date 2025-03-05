@@ -35,7 +35,7 @@ export class AuthService {
       .post(`${this.API_URL}/signup`, { username: email, password })
       .pipe(
         catchError(error => {
-          return throwError(() => new Error('Registration failed'));
+          return throwError(() => new Error('Email is already taken'));
         })
       );
   }
@@ -52,7 +52,7 @@ export class AuthService {
           return response;
         }),
         catchError(error => {
-          return throwError(() => new Error('Login failed'));
+          return throwError(() => new Error('Email or password is incorrect'));
         })
       );
   }
