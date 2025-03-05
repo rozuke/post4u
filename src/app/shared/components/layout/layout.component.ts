@@ -15,6 +15,8 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { filter } from 'rxjs/operators';
 import { UserService } from '../../../core/services/user.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-layout',
   imports: [
@@ -27,6 +29,8 @@ import { UserService } from '../../../core/services/user.service';
     RouterOutlet,
     MatDividerModule,
     RouterModule,
+    MatMenuModule,
+    MatCardModule
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',

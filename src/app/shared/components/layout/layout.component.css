@@ -14,13 +14,26 @@
   justify-content: space-around;
   align-items: center;
 }
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
+.button-avatar {
+  border-radius: 32px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: var(--mat-sys-primary-container);
+  box-shadow: none;
+}
 .create-button {
   font-size: 18px;
   color: var(--mat-sys-secondary);
 }
 .create-button mat-icon {
   margin-top: -2px;
+  color: var(--mat-sys-primary);
 }
 .feed-container {
   display: flex;
