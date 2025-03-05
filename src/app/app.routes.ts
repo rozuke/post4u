@@ -6,6 +6,7 @@ import { authGuard } from './shared/guards/auth.guard';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { CreateUpdatePostComponent } from './features/create-update-post/create-post.component';
 import { UserProfileComponent } from './features/user-profile/user-profile.component';
+import { CommentPostComponent } from './features/comment-post/comment-post.component';
 
 export const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
@@ -28,6 +29,11 @@ export const routes: Routes = [
       {
         path: 'user/:userId',
         component: UserProfileComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'post/:postId',
+        component: CommentPostComponent,
         canActivate: [authGuard],
       },
     ],

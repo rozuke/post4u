@@ -1,0 +1,61 @@
+<div class="layout-container">
+  <div class="profile-container">
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <div class="header">
+          <div mat-card-avatar class="avatar">
+            <span>{{ postData.author.username | initials }}</span>
+          </div>
+          <div>
+            <mat-card-title>{{ postData.author.username }}</mat-card-title>
+            <mat-card-subtitle>{{
+              postData.createdAt | timeAgo
+            }}</mat-card-subtitle>
+          </div>
+        </div>
+      </mat-card-header>
+    </mat-card>
+    <div class="content-container">
+      <p>
+        {{ postData.text }}
+      </p>
+    </div>
+    <div class="comment-box-container">
+      <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+        <textarea
+          class="comment-box"
+          formControlName="text"
+          placeholder="Comment"
+          (input)="autoResize($event)"
+        ></textarea>
+        <button
+          [disabled]="commentForm.invalid"
+          mat-flat-button
+          color="primary"
+          type="submit"
+        >
+          Comment
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="comments-container">
+    @for (item of comments; track $index) {
+      <div class="comment-container">
+        <div class="user-comment">
+          <div mat-card-avatar class="avatar-comment">
+            <span>{{ item.author.username | initials }}</span>
+          </div>
+          <p>
+            {{ item.author.username }} •
+            <span>{{ item.createdAt | timeAgo }}</span>
+          </p>
+        </div>
+        <div class="user-comment-content">
+          <p>{{ item.text }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

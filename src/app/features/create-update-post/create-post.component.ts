@@ -34,7 +34,6 @@ export class CreateUpdatePostComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly postService = inject(PostService);
   private readonly snackBar = inject(MatSnackBar);
-  private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly userService = inject(UserService);
   private readonly location = inject(Location);

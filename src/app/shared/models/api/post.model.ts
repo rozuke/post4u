@@ -20,4 +20,4 @@ interface Author {
   __v: number;
 }
 
-export type { PostResponseDTO, PostDTO };
+export type { PostResponseDTO, PostDTO, Author };

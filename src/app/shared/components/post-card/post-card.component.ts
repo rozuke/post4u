@@ -29,7 +29,7 @@ export class PostCardComponent {
   @Input() postId: string = '';
 
   onCardClick() {
-    this.router.navigate(['/test1']);
+    this.router.navigate(['/post', this.postId]);
   }
 
   deletePostHandler() {
