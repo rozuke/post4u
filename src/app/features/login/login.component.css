@@ -69,7 +69,7 @@ a {
     font-weight: 600;
     text-align: center;
     line-height: normal;
-    color: var(--mat-sys-inverse-surface);
+    color: var(--mat-sys-secondary);
     letter-spacing: 4.8px;
   }
   .register-form {

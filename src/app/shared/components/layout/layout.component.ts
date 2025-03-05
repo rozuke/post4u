@@ -70,6 +70,12 @@ export class LayoutComponent implements OnDestroy, OnInit {
     this.router.navigate(['/']);
   }
 
+  logout(): void {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['/login']);
+  }
+
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
