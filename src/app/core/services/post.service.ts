@@ -30,4 +30,8 @@ export class PostService {
       )
     );
   }
+
+  deletePost(postId: string) {
+    return this.http.delete(`${this.API_URL}/${postId}`);
+  }
 }

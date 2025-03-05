@@ -14,6 +14,7 @@
           @for (item of posts; track $index) {
             <app-post-card
               class="post-card"
+              [postId]="item._id"
               [avatar]="item.author.username | initials"
               [title]="item.author.username"
               [content]="item.text"

@@ -31,8 +31,7 @@ export class UserProfileComponent implements OnInit {
       this.userName = this.userSerive.getUserName();
       this.userId = this.userSerive.getUserId();
       this.postService.getPostByUserId(this.userId).subscribe(posts => {
-        console.log("User's posts: ", posts.length);
-        this.posts = posts;
+        this.posts = posts.reverse();
       });
     });
   }

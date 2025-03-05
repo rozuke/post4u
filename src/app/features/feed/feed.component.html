@@ -1,13 +1,14 @@
 <div class="pots-container">
   @for (item of displayedPosts; track $index) {
-    <app-post-card
-      class="post-card"
-      [avatar]="item.author.username | initials"
-      [title]="item.author.username"
-      [content]="item.text"
-      [subtitle]="item.createdAt | timeAgo"
-      [showBulletOptions]="false"
-    ></app-post-card>
+    <div class="post-card">
+      <app-post-card
+        [avatar]="item.author.username | initials"
+        [title]="item.author.username"
+        [content]="item.text"
+        [subtitle]="item.createdAt | timeAgo"
+        [showBulletOptions]="false"
+      ></app-post-card>
+    </div>
   }
   @if (loading) {
     <div class="spinner-container">
