@@ -31,8 +31,6 @@ export class PostService {
     return this.getPosts().pipe(
       map(posts =>
         posts.filter(post => {
-          console.log('Post author: ', post.author._id);
-          console.log('User ID: ', userId);
           return post.author._id === userId;
         })
       )

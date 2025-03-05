@@ -37,7 +37,6 @@ export class FeedComponent implements OnInit {
     this.loading = true;
     this.postService.getPosts().subscribe({
       next: posts => {
-        console.log('Total  posts: ', posts.length);
         this.allPosts = posts.reverse();
         this.loadMorePosts();
         this.loading = false;
@@ -62,7 +61,6 @@ export class FeedComponent implements OnInit {
   }
 
   private loadMorePosts(): void {
-    console.log('Loading more posts');
     if (this.currentIndex >= this.allPosts.length) {
       this.hasMore = false;
       this.showNoMorePostsMessage();
