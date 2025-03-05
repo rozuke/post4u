@@ -30,12 +30,12 @@ export class FeedComponent implements OnInit {
   private pageSize = 10;
 
   ngOnInit(): void {
-    this.loadInitialPosts();
+    this.loadPosts();
   }
 
-  private loadInitialPosts(): void {
+  private loadPosts(): void {
     this.loading = true;
-    this.postService.getPosts().subscribe({
+    this.postService.getPostsWithCommentCounts().subscribe({
       next: posts => {
         this.allPosts = posts.reverse();
         this.loadMorePosts();

@@ -4,6 +4,7 @@ interface PostResponseDTO {
   author: Author;
   createdAt: string;
   updatedAt: string;
+  commentsCount: number;
   __v: number;
 }
 interface PostDTO {
